@@ -10,21 +10,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout the repository
+      # Step 1: Checkout the code from the repository
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Step 2: Set up Python environment
+      # Step 2: Set up Python
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: "3.8"
 
-      # Step 3: Install Databricks CLI
-      - name: Install Databricks CLI
-        run: pip install databricks-cli
+      # Step 3: Install the older version of Databricks CLI
+      - name: Install Databricks CLI (deprecated version)
+        run: pip install databricks-cli==0.17.4
 
-      # Step 4: Configure Databricks CLI
+      # Step 4: Configure Databricks CLI with username/password authentication
       - name: Configure Databricks CLI
         run: |
           databricks configure --host $DATABRICKS_HOST --username $DATABRICKS_USERNAME --password $DATABRICKS_PASSWORD
@@ -33,7 +33,7 @@ jobs:
           DATABRICKS_USERNAME: ${{ secrets.DATABRICKS_USERNAME }}
           DATABRICKS_PASSWORD: ${{ secrets.DATABRICKS_PASSWORD }}
 
-      # Step 5: Upload Notebooks to Databricks Workspace
+      # Step 5: Upload notebooks to the Databricks workspace
       - name: Upload notebooks
         run: |
           databricks workspace import_dir ./notebooks /Workspace/POC --overwrite
