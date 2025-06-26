@@ -1,0 +1,34 @@
+name: Deploy to Databricks Free Tier
+
+on:
+  push:
+    branches:
+      - main  # Trigger the workflow on changes to the main branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Step 1: Checkout the repository
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # Step 2: Set up Python
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.8"
+
+    # Step 3: Install Databricks CLI
+    - name: Install Databricks CLI
+      run: pip install databricks-cli
+
+    # Step 4: Configure Databricks CLI
+    - name: Configure Databricks CLI
+      env:
+        DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+        DATABRICKS_USERNAME: ${{ secrets.DATABRICKS_USERNAME }}
+        DATABRICKS_PASSWORD: ${{ secrets.DATABRICKS_PASSWORD }}
+      run: |
+        databricks configure
