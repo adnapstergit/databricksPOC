@@ -31,4 +31,4 @@ jobs:
       env:
         DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
       run: |
-        databricks jobs run-now --job-id <REPLACE_WITH_YOUR_JOB_ID>
+        databricks jobs run-now --job-id e523849b-e0e1-4f93-b992-cc31d7402198
